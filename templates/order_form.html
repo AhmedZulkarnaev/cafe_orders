@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{% if form.instance.pk %}Изменить заказ{% else %}Создать заказ{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Изменить заказ{% else %}Создать заказ{% endif %}</h2>
+<form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>
+<a href="{% url 'order_list' %}" class="btn btn-secondary mt-3">Назад к списку заказов</a>
+{% endblock %}
