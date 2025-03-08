@@ -1,10 +1,9 @@
-from django.urls import reverse_lazy
+from typing import Optional, Type
+from django.db.models import Q, QuerySet
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.db.models import QuerySet, Q
-from typing import Optional
-
-from .models import Order
-from .forms import OrderForm
+from django.urls import reverse_lazy
+from cafe.models import Order
+from cafe.forms import OrderForm
 
 
 class OrderListView(ListView):
@@ -16,7 +15,7 @@ class OrderListView(ListView):
         template_name: Имя шаблона для отображения.
         context_object_name: Имя переменной контекста для списка объектов.
     """
-    model: Order
+    model: Type[Order] = Order
     template_name: str = "order_list.html"
     context_object_name: str = "orders"
 
@@ -24,9 +23,11 @@ class OrderListView(ListView):
         """
         Переопределение метода для фильтрации заказов.
 
-        Этот метод фильтрует заказы на основе параметра переданного в запросе.
-        Если 'q' содержит текстовый запрос,
-        он фильтрует заказы по статусу или номеру стола.
+        Фильтрует заказы на основе параметра 'q', переданного в запросе.
+        Если 'q' содержит текстовый запрос, фильтрует заказы по статусу или номеру стола.
+
+        Returns:
+            QuerySet[Order]: Отфильтрованный набор заказов.
         """
         queryset: QuerySet[Order] = super().get_queryset()
         query: Optional[str] = self.request.GET.get('q')
@@ -48,8 +49,8 @@ class OrderCreateView(CreateView):
         template_name: Имя шаблона для отображения.
         success_url: URL для перенаправления после успешного создания.
     """
-    model: Order
-    form_class: OrderForm
+    model: Type[Order] = Order
+    form_class: Type[OrderForm] = OrderForm
     template_name: str = "order_form.html"
     success_url: str = reverse_lazy("order_list")
 
@@ -64,8 +65,8 @@ class OrderUpdateView(UpdateView):
         template_name: Имя шаблона для отображения.
         success_url: URL для перенаправления после успешного обновления.
     """
-    model: Order
-    form_class: OrderForm
+    model: Type[Order] = Order
+    form_class: Type[OrderForm] = OrderForm
     template_name: str = "order_form.html"
     success_url: str = reverse_lazy("order_list")
 
@@ -79,6 +80,6 @@ class OrderDeleteView(DeleteView):
         template_name: Имя шаблона для отображения.
         success_url: URL для перенаправления после успешного удаления.
     """
-    model: Order
+    model: Type[Order] = Order
     template_name: str = "order_confirm_delete.html"
     success_url: str = reverse_lazy("order_list")
