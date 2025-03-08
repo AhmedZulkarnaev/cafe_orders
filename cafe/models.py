@@ -1,4 +1,3 @@
-from decimal import Decimal
 from django.db import models
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
@@ -30,7 +29,7 @@ class Order(models.Model):
     Атрибуты:
         STATUS_CHOICES (list): Возможные статусы заказа.
         table_number (IntegerField): Номер стола, за которым сделан заказ.
-        items (JSONField): Список блюд и их цены в формате JSON.
+        items (ManyToManyField): Список блюд и их цены в формате JSON.
         total_price (DecimalField): Общая стоимость заказа.
         status (CharField): Статус заказа.
     """
@@ -54,10 +53,6 @@ class Order(models.Model):
         default="pending",
         verbose_name="Статус заказа"
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата создания"
-    )
 
     def calculate_total_price(self):
         """
@@ -77,7 +72,7 @@ class Order(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"Заказ {self.id} (Стол {self.table_number}) - {self.status}"
+        return f"Заказ {self.id} -> Стол {self.table_number} - {self.status}"
 
 
 @receiver(m2m_changed, sender=Order.items.through)
