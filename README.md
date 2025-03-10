@@ -20,7 +20,7 @@ PYTHON DJANGO DRF SQLITE
 
     ```shell
     git clone https://github.com/AhmedZulkarnaev/cafe_orders
-    cd YaCut
+    cd cafe_tz
     ```
 
 ## 👀 Использование
