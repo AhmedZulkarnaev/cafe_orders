@@ -2,14 +2,6 @@ from rest_framework import serializers
 from cafe.models import Order, Dish
 
 
-class DishSerializer(serializers.ModelSerializer):
-    """Сериализатор для модели Dish."""
-
-    class Meta:
-        model = Dish
-        fields = ['id', 'name', 'price']
-
-
 class OrderSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Order."""
     items = serializers.PrimaryKeyRelatedField(

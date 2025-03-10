@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Выручка по оплаченным заказам</h2>
+
+<!-- Отображение общей выручки -->
+<h3>Общая выручка: {{ total_revenue }} руб.</h3>
+
+<!-- Таблица оплаченных заказов -->
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID заказа</th>
+            <th>Номер стола</th>
+            <th>Сумма</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.table_number }}</td>
+            <td>{{ order.total_price }} руб.</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Нет оплаченных заказов</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

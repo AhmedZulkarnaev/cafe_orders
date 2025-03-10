@@ -9,7 +9,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     Атрибуты:
         list_display (tuple): Поля, отображаемые в списке объектов.
-        list_filter (tuple): Поля, по которым можно фильтровать 
+        list_filter (tuple): Поля, по которым можно фильтровать
         список объектов.
         search_fields (tuple): Поля, по которым можно выполнять поиск.
         readonly_fields (tuple): Поля, которые доступны только для чтения.
