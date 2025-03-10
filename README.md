@@ -8,9 +8,7 @@
 
 ### Технологии
 
-[![Django][Django-badge]][Django-url]
-[![DRF][DRF-badge]][DRF-url]
-[![SQLite][SQLite-badge]][SQLite-url]
+PYTHON DJANGO DRF SQLITE
 
 ## ⚙ Начало Работы
 
@@ -18,7 +16,7 @@
 
 ### ⚠ Зависимости
 
-- [Python 3.7+][Python-url]
+- [Python 3.9+]
 
 ### Установка
 
@@ -33,7 +31,7 @@
 
 ![Usage-example](docs/usage_example.gif)
 
-### API (Docs: [OpenAPI](docs/openapi.yml))
+### API
 
 - **POST** `/api/orders/`
 - **GET** `/api/orders/{id}/`
