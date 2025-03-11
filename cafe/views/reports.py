@@ -1,12 +1,11 @@
 from django.views.generic import TemplateView
 from django.db.models import Sum
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
 from cafe.models import Order
 
 
-class RevenueView(LoginRequiredMixin, TemplateView):
+class RevenueView(TemplateView):
     template_name = "revenue.html"
 
     def get(self, request, *args, **kwargs):

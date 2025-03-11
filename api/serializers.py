@@ -15,7 +15,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         """Проверяет валидность данных заказа."""
-        if attrs.get('table_number') <= 0:
+        table_number = attrs.get('table_number')
+        if table_number is not None and table_number <= 0:
             raise serializers.ValidationError(
                 {"table_number": "Номер стола должен быть положительным."}
             )

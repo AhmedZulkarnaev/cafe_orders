@@ -1,14 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.contrib import messages
 from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin  # При необходимости для защиты доступа
 
 from cafe.models import Order
 from cafe.forms import OrderForm
 
 
-class OrderListView(LoginRequiredMixin, ListView):
+class OrderListView(ListView):
     """
     Представление для отображения списка заказов с фильтрацией и пагинацией.
 
@@ -21,7 +19,6 @@ class OrderListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = "order_list.html"
     context_object_name = "orders"
-    paginate_by = 20
 
     def get_queryset(self):
         """
@@ -48,7 +45,7 @@ class OrderListView(LoginRequiredMixin, ListView):
         return context
 
 
-class OrderCreateView(LoginRequiredMixin, CreateView):
+class OrderCreateView(CreateView):
     """
     Представление для создания нового заказа
     с уведомлением об успешном создании.
@@ -60,18 +57,13 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        messages.success(self.request, "Заказ успешно создан.")
         return response
 
     def form_invalid(self, form):
-        messages.error(
-            self.request,
-            "Ошибка при создании заказа. Проверьте данные формы."
-        )
         return super().form_invalid(form)
 
 
-class OrderUpdateView(LoginRequiredMixin, UpdateView):
+class OrderUpdateView(UpdateView):
     """
     Представление для обновления существующего заказа
     с уведомлением об успешном обновлении.
@@ -81,20 +73,8 @@ class OrderUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "order_form.html"
     success_url = reverse_lazy("order_list")
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        messages.success(self.request, "Заказ успешно обновлён.")
-        return response
 
-    def form_invalid(self, form):
-        messages.error(
-            self.request,
-            "Ошибка при обновлении заказа. Проверьте данные формы."
-        )
-        return super().form_invalid(form)
-
-
-class OrderDeleteView(LoginRequiredMixin, DeleteView):
+class OrderDeleteView(DeleteView):
     """
     Представление для удаления заказа
     с подтверждением и уведомлением об успешном удалении.
@@ -102,7 +82,3 @@ class OrderDeleteView(LoginRequiredMixin, DeleteView):
     model = Order
     template_name = "order_confirm_delete.html"
     success_url = reverse_lazy("order_list")
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "Заказ успешно удалён.")
-        return super().delete(request, *args, **kwargs)
