@@ -53,7 +53,15 @@ PYTHON DJANGO DRF SQLITE
     ```shell
     python manage.py runserver
     ```
-   
+
+### Тестирование
+
+**Введите команду**
+```shell
+python manage.py test
+```
+17 тестов должны пройти успешно
+
 ---
 
 ### ⚠️ ВНИМАНИЕ!  
